@@ -32,4 +32,4 @@ const WorkExperienceSchema = mongoose.Schema({
   additionalDoc: [String],
 });
 
-module.exports = mongoose.model('StudentFeedback', StudentFeedbackSchema);
+module.exports = mongoose.model('WorkExperience', WorkExperienceSchema);
