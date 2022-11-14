@@ -12,6 +12,7 @@ const jobApplyRouter = require('./routers/jobApplyRouter');
 const aboutUsRouter = require('./routers/AdminRouters/aboutUsRouter');
 const ourTeamRouter = require('./routers/AdminRouters/ourTeamRouter');
 const ourServiceRouter = require('./routers/AdminRouters/ourServiceRouter');
+const clientCallsRouter = require('./routers/AdminRouters/clientCallsRouter');
 
 // Error handler middleware import
 const errorHandler = require('./middleware/errorHandler');
@@ -33,6 +34,7 @@ app.use('/api/jobapply', jobApplyRouter);
 app.use('/api/admin/aboutus', aboutUsRouter);
 app.use('/api/admin/ourteam', ourTeamRouter);
 app.use('/api/admin/ourservice', ourTeamRouter);
+app.use('/api/admin/clientcall', clientCallsRouter);
 
 app.use(
   '/public/uploads/jobapplications',
