@@ -15,16 +15,13 @@ const OurTeamSchema = mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
   },
   // Fields for social links
   github: {
     type: String,
-    required: true,
   },
   linkedin: {
     type: String,
-    required: true,
   },
 });
 
