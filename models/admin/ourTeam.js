@@ -17,6 +17,7 @@ const OurTeamSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  // Fields for social links
   github: {
     type: String,
     required: true,
