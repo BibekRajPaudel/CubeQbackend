@@ -3,11 +3,10 @@ const {
   getScheduledCalls,
 } = require('../controllers/scheduleCall');
 const StudentFeedback = require('../models/scheduleACall');
-const catchAsync = require('../utils/asyncHandler');
 
 const router = require('express').Router();
 
+// Done by client
 router.post('/', scheduleCall);
 
-// Admin routes
-router.get('/', getScheduledCalls);
+module.exports = router;
