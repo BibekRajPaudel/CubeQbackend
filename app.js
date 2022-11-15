@@ -44,6 +44,10 @@ app.use(
   '/public/uploads/aboutusimage',
   express.static(path.join(__dirname, '/public/uploads/jobapplications'))
 );
+app.use(
+  '/public/uploads/ourteamimages',
+  express.static(path.join(__dirname, '/public/uploads/jobapplications'))
+);
 
 app.use(errorHandler);
 app.use(routeNotFound);
