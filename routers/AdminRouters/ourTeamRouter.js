@@ -8,6 +8,12 @@ const {
   updateAboutUs,
   getAboutUs,
 } = require('../../controllers/AdminControllers/aboutUsController');
+const {
+  addTeamMember,
+  updateTeamMember,
+  getAllTeamMembers,
+  getSingleTeamMember,
+} = require('../../controllers/AdminControllers/ourTeamController');
 
 const storage = multer.diskStorage({
   // location where the file gets saved
@@ -43,101 +49,12 @@ const upload = multer({
   },
 });
 
-router.post(
-  '/',
-  upload.single('image'),
-  catchAsync(async (req, res) => {
-    const file = req.file;
+router.post('/', upload.single('image'), addTeamMember);
 
-    if (!file) return res.status(400).send('No image in the request');
+router.patch('/:id', upload.single('image'), updateTeamMember);
 
-    const result = await OurTeam.create({
-      ...req.body,
-      image: file.path,
-    });
+router.get('/', getAllTeamMembers);
 
-    if (result) {
-      res.status(200).json({
-        success: true,
-        msg: 'Team member successfully added',
-      });
-    } else {
-      res.status(200).json({
-        success: false,
-        msg: 'Failed to add team member, Please try again later',
-      });
-    }
-  })
-);
-
-router.patch(
-  '/:id',
-  upload.single('image'),
-  catchAsync(async (req, res) => {
-    const team = await OurTeam.findById(req.params.id);
-    const file = req.file;
-
-    if (team) {
-      const t = await OurTeam.findByIdAndUpdate(req.params.id, {
-        ...req.body,
-        image: file && file.path ? file.path : team.image,
-      });
-
-      if (t) {
-        res.status(200).json({
-          success: true,
-          msg: 'Updated',
-        });
-      } else {
-        res.status(400).json({
-          success: false,
-          msg: 'Something went wrong',
-        });
-      }
-    } else {
-      res.status(400).json({
-        success: false,
-        msg: 'Something went wrong',
-      });
-    }
-  })
-);
-
-router.get(
-  '/',
-  catchAsync(async (req, res) => {
-    const teams = await OurTeam.find();
-
-    if (teams) {
-      res.status(200).json({
-        teams,
-        success: true,
-      });
-    } else {
-      res.status(400).json({
-        success: false,
-      });
-    }
-  })
-);
-
-router.get(
-  '/:id',
-  catchAsync(async (req, res) => {
-    const teamMember = await OurTeam.findById(req.params.id);
-
-    if (teamMember) {
-      res.status(200).json({
-        teamMember,
-        success: true,
-      });
-    } else {
-      res.status(400).json({
-        success: false,
-        msg: "Failed to get team member's info",
-      });
-    }
-  })
-);
+router.get('/:id', getSingleTeamMember);
 
 module.exports = router;
