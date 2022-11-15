@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const OurService = require('../../models/admin/ourService');
+const CaseStudy = require('../../models/admin/caseStudy');
 const multer = require('multer');
 const catchAsync = require('../../utils/asyncHandler');
 const path = require('path');
@@ -19,7 +19,7 @@ const {
 const storage = multer.diskStorage({
   // location where the file gets saved
   destination(req, file, cb) {
-    cb(null, 'public/uploads/ourserviceimages');
+    cb(null, 'public/uploads/casestudy');
   },
   filename: function (req, file, cb) {
     cb(
@@ -39,7 +39,7 @@ const checkFileType = (file, cb) => {
   if (extname && mimetype) {
     return cb(null, true);
   } else {
-    cb('Images Only Allowed');
+    cb('Images or PDF Only Allowed');
   }
 };
 
@@ -52,26 +52,26 @@ const upload = multer({
 
 router.post(
   '/',
-  upload.single('image'),
+  upload.single('caseStudyDocument'),
   catchAsync(async (req, res) => {
     const file = req.file;
 
     if (!file) return res.status(400).send('No image in the request');
 
-    const result = await OurService.create({
+    const result = await CaseStudy.create({
       ...req.body,
-      image: file.path,
+      caseStudyDocument: file.path,
     });
 
     if (result) {
       res.status(200).json({
         success: true,
-        msg: 'Service successfully added',
+        msg: 'Case Study successfully added',
       });
     } else {
       res.status(200).json({
         success: false,
-        msg: 'Failed to add service, Please try again later',
+        msg: 'Failed to service, Please try again later',
       });
     }
   })
@@ -79,15 +79,15 @@ router.post(
 
 router.patch(
   '/:id',
-  upload.single('image'),
+  upload.single('caseStudyDocument'),
   catchAsync(async (req, res) => {
-    const team = await OurService.findById(req.params.id);
+    const team = await CaseStudy.findById(req.params.id);
     const file = req.file;
 
     if (team) {
-      const t = await OurService.findByIdAndUpdate(req.params.id, {
+      const t = await CaseStudy.findByIdAndUpdate(req.params.id, {
         ...req.body,
-        image: file && file.path ? file.path : team.image,
+        caseStudyDocument: file && file.path ? file.path : team.image,
       });
 
       if (t) {
@@ -113,7 +113,7 @@ router.patch(
 router.get(
   '/',
   catchAsync(async (req, res) => {
-    const teams = await OurService.find();
+    const teams = await CaseStudy.find();
 
     if (teams) {
       res.status(200).json({
@@ -132,7 +132,7 @@ router
   .route('/:id')
   .get(
     catchAsync(async (req, res) => {
-      const teamMember = await OurService.findById(req.params.id);
+      const teamMember = await CaseStudy.findById(req.params.id);
 
       if (teamMember) {
         res.status(200).json({
@@ -142,14 +142,14 @@ router
       } else {
         res.status(400).json({
           success: false,
-          msg: 'Failed to get service info',
+          msg: 'Failed to get case study info',
         });
       }
     })
   )
   .delete(
     catchAsync(async (req, res) => {
-      const result = await OurService.findByIdAndDelete(req.params.id);
+      const result = await CaseStudy.findByIdAndDelete(req.params.id);
 
       if (result) {
         res.status(200).json({
