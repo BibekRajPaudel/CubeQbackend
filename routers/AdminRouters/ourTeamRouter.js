@@ -13,6 +13,7 @@ const {
   updateTeamMember,
   getAllTeamMembers,
   getSingleTeamMember,
+  deleteTeamMember,
 } = require('../../controllers/AdminControllers/ourTeamController');
 
 const storage = multer.diskStorage({
@@ -55,24 +56,6 @@ router.patch('/:id', upload.single('image'), updateTeamMember);
 
 router.get('/', getAllTeamMembers);
 
-router.get('/:id', getSingleTeamMember);
-
-router.delete(
-  '/:id',
-  catchAsync(async (req, res) => {
-    const result = await OurTeam.findByIdAndDelete(req.params.id);
-
-    if (result) {
-      res.status(200).json({
-        result,
-        success: true,
-      });
-    } else {
-      res.status(400).json({
-        success: false,
-      });
-    }
-  })
-);
+router.route('/:id').get(getSingleTeamMember).delete(deleteTeamMember);
 
 module.exports = router;
