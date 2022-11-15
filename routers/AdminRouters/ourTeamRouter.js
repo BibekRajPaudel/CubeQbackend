@@ -57,4 +57,22 @@ router.get('/', getAllTeamMembers);
 
 router.get('/:id', getSingleTeamMember);
 
+router.delete(
+  '/:id',
+  catchAsync(async (req, res) => {
+    const result = await OurTeam.findByIdAndDelete(req.params.id);
+
+    if (result) {
+      res.status(200).json({
+        result,
+        success: true,
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+      });
+    }
+  })
+);
+
 module.exports = router;
