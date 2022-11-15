@@ -11,7 +11,7 @@ const OurTeamSchema = mongoose.Schema({
   },
   position: {
     type: String,
-    trim,
+    trim: true,
   },
   image: {
     type: String,
