@@ -7,6 +7,7 @@ const connectDB = require('./db/connect');
 // Routers
 const scheduleACallRouter = require('./routers/scheduleACallRouter');
 const jobApplyRouter = require('./routers/jobApplyRouter');
+const jobVacancyRouter = require('./routers/ClientRouters/vacancyRouter');
 
 // Admin ROuters
 const adminLoginRouter = require('./routers/AdminRouters/adminLoginRouter');
@@ -34,6 +35,7 @@ app.get('/', (req, res, next) => {
 
 app.use('/api/call', scheduleACallRouter);
 app.use('/api/jobapply', jobApplyRouter);
+app.use('/api/vacancy', jobVacancyRouter);
 
 // Admin Routes
 app.use('/api/admin/login', adminLoginRouter);
