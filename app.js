@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const connectDB = require('./db/connect');
+const multer = require("multer")
 
 // Routers
 const scheduleACallRouter = require('./routers/scheduleACallRouter');
@@ -23,11 +24,26 @@ const clientCallsRouter = require('./routers/AdminRouters/clientCallsRouter');
 const errorHandler = require('./middleware/errorHandler');
 const routeNotFound = require('./middleware/notFound');
 const { protect, admin } = require('./middleware/authMiddleware');
+const { createAboutUs, updateAboutUs } = require('./controllers/AdminControllers/aboutUsController');
 
 const app = express();
 
+
+
 app.use(cors());
 app.use(express.json());
+
+const filestorage = multer.diskStorage({
+  destination:(req, file, cb)=>{
+cb(null, "images")
+  },
+  filename: (req, file, cb) =>{
+    cb(null, new Date().toISOString() + "-" + file.originalname)
+  }
+})
+
+
+app.use(multer({storage: filestorage}).single("image"))
 
 app.get('/', (req, res, next) => {
   res.send('Server started !!!!!!!!!!');
@@ -52,10 +68,13 @@ app.use(
 );
 app.use('/api/admin/clientcall', protect, admin, clientCallsRouter);
 
+app.use("/api/updateAboutUs", updateAboutUs)
+
 app.use(
   '/public/uploads/jobapplications',
   express.static(path.join(__dirname, '/public/uploads/jobapplications'))
 );
+ app.use('/api/aboutUs', createAboutUs);
 app.use(
   '/public/uploads/aboutusimage',
   express.static(path.join(__dirname, '/public/uploads/jobapplications'))

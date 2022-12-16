@@ -4,6 +4,9 @@ const JobApplicationSchema = mongoose.Schema({
   fullName: {
     type: String,
   },
+  position:{
+    type:String
+  },
   email: {
     type: String,
     trim: true,

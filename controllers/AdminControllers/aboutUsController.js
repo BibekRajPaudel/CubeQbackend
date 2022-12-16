@@ -1,6 +1,38 @@
 const AboutUs = require('../../models/admin/aboutUs');
 const catchAsync = require('../../utils/asyncHandler');
 
+const createAboutUs = (req, res, next) => {
+  const title = req.body.title;
+  const image= req.file;
+  const subText = req.body.subText;
+  const description = req.body.description;
+
+  const imageUrl = image.path;
+
+  const aboutUs = new AboutUs({
+        title: title,
+        subText: subText,
+        description: description,
+        image: imageUrl,
+      });
+
+   aboutUs
+    .save()
+    .then(result => {
+      console.log('Value Saved');
+    })
+    .catch(err => {
+      console.log(err)
+    });
+
+    res.status(200).json({
+      success: true,
+      aboutUs
+    });
+
+  }
+
+
 const updateAboutUs = catchAsync(async (req, res) => {
   const file = req.file;
 
@@ -60,6 +92,7 @@ const getAboutUs = catchAsync(async (req, res) => {
 });
 
 module.exports = {
+  createAboutUs,
   updateAboutUs,
   getAboutUs,
 };
