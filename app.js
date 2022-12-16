@@ -3,7 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const connectDB = require('./db/connect');
-const multer = require("multer")
 
 // Routers
 const scheduleACallRouter = require('./routers/scheduleACallRouter');
@@ -33,17 +32,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const filestorage = multer.diskStorage({
-  destination:(req, file, cb)=>{
-cb(null, "images")
-  },
-  filename: (req, file, cb) =>{
-    cb(null, new Date().toISOString() + "-" + file.originalname)
-  }
-})
 
-
-app.use(multer({storage: filestorage}).single("image"))
 
 app.get('/', (req, res, next) => {
   res.send('Server started !!!!!!!!!!');
