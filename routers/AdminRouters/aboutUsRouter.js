@@ -48,4 +48,5 @@ router.post('/', upload.single('image'), updateAboutUs);
 
 router.get('/', getAboutUs);
 
-module.exports = router;
+module.exports = router
+
