@@ -1,5 +1,7 @@
 const multer = require('multer');
 const path = require('path');
+const express = require('express');
+const app = express();
 
 const provideStorage = filePath => {
   return multer.diskStorage({
@@ -38,5 +40,17 @@ const checkFileType = (whatToCheck, errMsg) => {
     cb(errMsg);
   }
 };
+
+const filestorage = multer.diskStorage({
+  destination:(req, file, cb)=>{
+cb(null, "images")
+  },
+  filename: (req, file, cb) =>{
+    cb(null, new Date().toISOString() + "-" + file.originalname)
+  }
+})
+
+
+app.use(multer({storage: filestorage}).single("image"))
 
 module.exports = { provideStorage, fileFilterPdfAndDocCheck, checkFileType };

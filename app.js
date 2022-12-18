@@ -23,11 +23,16 @@ const clientCallsRouter = require('./routers/AdminRouters/clientCallsRouter');
 const errorHandler = require('./middleware/errorHandler');
 const routeNotFound = require('./middleware/notFound');
 const { protect, admin } = require('./middleware/authMiddleware');
+const { createAboutUs, updateAboutUs } = require('./controllers/AdminControllers/aboutUsController');
 
 const app = express();
 
+
+
 app.use(cors());
 app.use(express.json());
+
+
 
 app.get('/', (req, res, next) => {
   res.send('Server started !!!!!!!!!!');
@@ -52,10 +57,13 @@ app.use(
 );
 app.use('/api/admin/clientcall', protect, admin, clientCallsRouter);
 
+app.use("/api/updateAboutUs", updateAboutUs)
+
 app.use(
   '/public/uploads/jobapplications',
   express.static(path.join(__dirname, '/public/uploads/jobapplications'))
 );
+ app.use('/api/aboutUs', createAboutUs);
 app.use(
   '/public/uploads/aboutusimage',
   express.static(path.join(__dirname, '/public/uploads/jobapplications'))
