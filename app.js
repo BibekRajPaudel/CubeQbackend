@@ -76,7 +76,7 @@ app.use(
 app.use(errorHandler);
 app.use(routeNotFound);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 (async () => {
   try {

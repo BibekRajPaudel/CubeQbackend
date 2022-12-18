@@ -27,4 +27,4 @@ const addAdmin = async (name, email, password) => {
   }
 };
 
-addAdmin('Anjan Basnet', 'anjanbasnet@gmail.com', 'CUbeq123');
+addAdmin('Abhishek Chapagai', 'abhishek@gmail.com', '123456789');
