@@ -1,6 +1,27 @@
 const router = require('express').Router();
 const JobPost = require('../../models/admin/jobPost');
 const catchAsync = require('../../utils/asyncHandler');
+const JobApplication = require("../../models/jobapplicationModels/jobApplication")
+
+
+router.get(
+  '/jobapplications',
+  catchAsync(async (req, res) => {
+    const jobapplication = await JobApplication.find();
+
+    if (jobapplication) {
+      res.status(200).json({
+        jobapplication,
+        success: true,
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+      });
+    }
+  })
+);
+
 
 router.get(
   '/',
