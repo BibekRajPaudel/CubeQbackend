@@ -4,7 +4,7 @@ const connectDB = require('./db/connect');
 
 const addAdmin = async (name, email, password) => {
   await connectDB(
-    'mongodb+srv://cubeq:cubeq@work.ri5nhtx.mongodb.net/cubeq?retryWrites=true&w=majority'
+    'mongodb://127.0.0.1:27017/cubeQ'
   );
   try {
     const admin = await adminUser.create({
@@ -27,4 +27,4 @@ const addAdmin = async (name, email, password) => {
   }
 };
 
-addAdmin('Abhishek Chapagai', 'abhishek@gmail.com', '123456789');
+addAdmin('Abhishek Chapagai', 'pawan@gmail.com', '123456789');
