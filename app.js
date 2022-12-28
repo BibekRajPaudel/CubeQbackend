@@ -41,11 +41,13 @@ app.get('/', (req, res, next) => {
 app.use('/api/call', scheduleACallRouter);
 app.use('/api/jobapply', jobApplyRouter);
 app.use('/api/vacancy', jobVacancyRouter);
+app.use('/api/ourteam',ourTeamRouter);
 
 // Admin Routes
 app.use('/api/admin/login', adminLoginRouter);
 app.use('/api/admin/aboutus', protect, admin, aboutUsRouter);
 app.use('/api/admin/ourteam', protect, admin, ourTeamRouter);
+
 app.use('/api/admin/ourservice', protect, admin, ourServiceRouter);
 app.use('/api/admin/casestudy', protect, admin, caseStudyRouter);
 app.use('/api/admin/jobpost', protect, admin, jobPostRouter);

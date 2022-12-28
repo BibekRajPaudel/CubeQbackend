@@ -37,17 +37,13 @@ const checkFileType = (file, cb) => {
     cb('Images Only Allowed');
   }
 };
-
 const upload = multer({
   storage,
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   },
 });
-
 router.post('/', upload.single('image'), createAboutUs);
-
 router.get('/', getAboutUs);
-
 module.exports = router
 
