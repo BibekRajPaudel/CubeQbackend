@@ -8,6 +8,7 @@ const { rmSync } = require('fs');
 const {
   updateAboutUs,
   getAboutUs,
+  createAboutUs,
 } = require('../../controllers/AdminControllers/aboutUsController');
 
 const storage = multer.diskStorage({
@@ -44,7 +45,7 @@ const upload = multer({
   },
 });
 
-router.post('/', upload.single('image'), updateAboutUs);
+router.post('/', upload.single('image'), createAboutUs);
 
 router.get('/', getAboutUs);
 
